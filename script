@@ -1,5 +1,5 @@
 local shell = require "shell"
-local default_repo = "https://gitee.com/sh0aky/assembly-line/raw"
+local default_repo = "https://raw.githubusercontent.com/wumingzhiren/assembly-line-mk2/"
 local default_branch = "master"
 local template = "wget %s/%s"
 
