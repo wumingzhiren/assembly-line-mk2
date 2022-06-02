@@ -12,51 +12,77 @@ wget https://gitee.com/sh0aky/assembly-line/raw/master/script
 #e.g. github script https://raw.githubusercontent.com/shoaky009/assembly-line xxxx
 script
 ```
-### 0.使用前准备
+### 1.使用前准备
 
-#### 0.1建立流体数据
-    
-### 1.初始化&配置
+若您的GTNH版本为2123QF及以前，则无需进行以下下步骤。若您的GTNH版本高于2123QF，请进行此步骤以更新可能存在的流体及物品更新
 
-#### 1.1运行initializer并按照顺序放置转运器,程序会自动写入地址到config.lua
-> 1.原材料箱子相邻的transposer
+#### 1.1建立流体数据
+>
+> 1. 按"e"打开nei界面，点击左下角扳手，并依次点击工具-数据存储-nei整合中的流体和流体容器两项
+>
+> 2. 在".minecraft\dumps\"文件夹中找到"fluid.csv"、"fluidcontainer.csv"两个文件，使用记事本打开这两个文件，以UTF-8格式另存。
+>
+> 3. 执行脚本后，将以上两个文件复制进".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\conf\"文件夹中。
+
+#### 1.2更新电路数据
 > 
-> 2.1-14个与输入总线相邻的transposer
+> 1. 打开".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\recipe\"中的"chipDatabase.lua"文件，核对电路板的名称及物品id
+
+
+### 2.初始化&配置
+
+#### 2.1运行initializer.lua并按照顺序放置转运器,程序会自动写入地址到config.lua
+> 1. 原材料箱子相邻的转运器
 > 
-> 3.4个流体transposer的地址
+> 2. 16个位于输入总线下方的转运器
 > 
-> 4.4个me流体接口
+> 3. 4个流体转运器
+> 
+> 4. 4个me流体接口
 > 
 > 设置完成后系统会自动重启
 > 再次说明顺序很重要中途有任何错误都会导致程序无法运行 如果放错请ctrl+c退出重新来过
 
-#### 1.2设置transposer与原材料箱的面
+#### 2.2设置转运器与原材料箱的面
 >具体sides的定义查看官网API https://ocdoc.cil.li/api:sides
 ```lua
 config.chestInput.chestSourceSide = sides.top
 ```
-#### 1.3设置transposer与材料输出到输入总线的箱子
+#### 2.3设置转运器与材料输出到输入总线的箱子
 ```lua
 config.chestInput.chestOutputSide = sides.west
 ```
-#### 1.4设置transposer与熔物品的输出面
+#### 2.4设置转运器与熔物品的输出面
 ```lua
 config.chestInput.moltenOutputSide = sides.north
 ```
-#### 1.5设置流体输入面
+#### 2.5设置流体输入面
 ```lua
 config.fluidSourceSide = sides.bottom
 ```
 
-#### 1.6如果要用oc把原料送到输入总线,需要放末影箱在输入总线下并且所有都在同一频道
+#### 2.6如果要用oc把原料送到输入总线,需要放末影箱在输入总线下的转运器下，并且所有都在同一频道
 >如果你有其他方法实现输入总线内有物品就不输送进去 并且按照输出箱的物品循序来抽取可以不用配置这些东西
 
-### 2.设置流体到db中
+### 3.设置其他外围组件
 
->目前已知的有润滑油单元,冷却液,UU,焊锡,超能硅岩,丁苯橡胶,无菌培养基,硅橡胶
+#### 3.1 AE组件
+>紧贴任意一个适配器放置ME控制器，并连接2.1中放置的四个ME流体接口。
+>该AE子网中还需放置一个流体磁盘或其他流体存储设备,以暂存提取出的流体
+>该AE子网通过一个流体存储总线（只读模式）读取主AE网络ME流体接口，以使用主网络中流体
+#### 3.2 提取组件
+>提取出流体应输入子网中任意一个ME流体接口
+#### 3.3 其他OC组件
+>1. 紧贴装配线主方块放置一个红石I/O端口并接入OC网络，配套安装一个"设备活跃探测覆盖板"以探测工作进程
+>2. 紧贴数据库接口放置一个适配器，在其中放置一个"物品栏控制器升级"
+>3. 在其他适配器中放置一个"超级数据库升级"
+ 
+### 4.设置流体到db中
 
-### 3.配置完毕
->cd assembly-line
+>所有配方中使用的流体均需设置，方法见后文5.1
+
+### 5.配置完毕
+>cd assembly-line-mk2
 >
 >main (启动完毕后每2秒会到箱子里匹配物品)
 >
@@ -66,29 +92,21 @@ config.fluidSourceSide = sides.bottom
 >
 >tools/db (把流体单元放入原料箱的第一个位置,用来记录到流体单元db)
 
-### 4.关于recipes中type的说明
-4.1 item为在装配线中进入输入总线的物品
 
-4.2 molten(熔物品),fluid(在配方中使用对应流体单元的name+damage)这几类物品会按照配方中的顺序进入输入仓
+### 6.util说明
 
-4.3 molten会按照顺序放入箱子,然后提取机提取流体到输入仓的流体储罐中
-
-4.4 fluid根据label会去db中查询对应的index,然后自动设置流体输出总线的对应输出流体
-
-### 5.util说明
-
-5.1 db.lua
+#### 6.1 db.lua
 ```shell
     #存储源材料箱第一个位置的物品到database
     util/db
-    #存储源材料箱所有物品到database(注意不能超过81个 如果要支持81个要设置多个db)
+    #存储源材料箱所有物品到database新增数据(注意不能超过81个 如果要支持81个要设置多个db)
     util/db all
     #打印所有database中的数据
     util/db readAll
     #清除所有database中的数据
     util/db clearAll
 ```
-5.2 readitem.lua
+#### 6.2 readitem.lua
 ```shell
     #打印源材料箱的所有物品名称+damage
     util/readitem
@@ -100,24 +118,14 @@ config.fluidSourceSide = sides.bottom
 
 ## 注意点
 
->1.recipes的顺序必须要一样不然会把物品送入错误的仓位,流体同理
+> 1. 请使用服务器及至少两个超级组件总线来运行此程序,组件达35个，需要组件总线来扩展
 
->2.关于抽取提取机的流体使用工厂方块的原因是需要输出到近的储罐中,其他流体管道暂时还没发现能有这种功能
+> 2. 请使用至少两根T3.5级存储器，该程序对内存需求较大
 
->3.请使用服务器来运行此程序,组件过多需要组件总线来扩展
+> 3. 如果遇到流体不够的情况下程序会一直循环 直到ae中有足够的流体供给到me流体接口中
 
->4.流体提取机和史蒂夫工厂是可以完全砍掉的 也就是完全依赖于ae里的流体存储,因为有些流体不想弄进ae里 比如聚变主机的通流琥珀等等..
-> 如果要改首先要把recipes.lua中的MOLTEN类型全部替换为FLUID 然后要替换成对应的单元的物品名称 把单元放入源材料箱子里运行util/readitem即可读取
-> 最后将单元放入源材料箱第一个格子 运行util/db 存储进db
+> 4. 安装完毕正常运行后不要拆除任何oc的组件 否则地址会更变 你需要手动修改或者拆除所有oc转运器和me流体接口config.lua需要重新下载 然后运行initializer进行安装
 
->5.如果遇到流体不够的情况下程序会一直循环 直到ae中有足够的流体供给到me流体接口中
-
->6.安装完毕正常运行后不要拆除任何oc的组件 否则地址会更变 你需要手动修改或者拆除所有oc转运器和me流体接口config.lua需要重新下载 然后运行initializer
-> 进行安装
-
->7.并非所有配方的流体都可以用MOLTEN来处理比如第一个槽是FLUID类型的第二个MOLTEN就不行
-
->8.配方中所有关于电路板的都是晶体,EV的是量子 如果不一样可以自己去修改对应配方
 
 ## 参考视频
 https://www.bilibili.com/video/BV1iz4y1274d/

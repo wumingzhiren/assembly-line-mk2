@@ -42,7 +42,6 @@ function Main.loop()
         processing = true
         pg:start()
         processing = false
-        print("processing stop")
     end
 end
 

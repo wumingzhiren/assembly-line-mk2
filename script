@@ -14,10 +14,10 @@ else
     branch = default_branch
 end
 
-shell.execute("rm -rf ./assembly-line")
-shell.execute("mkdir assembly-line")
+shell.execute("rm -rf ./assembly-line-mk2")
+shell.execute("mkdir assembly-line-mk2")
 local pwd = shell.getWorkingDirectory()
-local dir = pwd .. "/assembly-line"
+local dir = pwd .. "/assembly-line-mk2"
 shell.setWorkingDirectory(dir)
 local prefix = string.format(template, repo, branch)
 shell.execute(prefix .. "/src/main.lua")
