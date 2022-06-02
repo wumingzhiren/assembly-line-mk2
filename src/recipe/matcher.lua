@@ -1,31 +1,57 @@
 local _M = {}
-local recipes = require("recipe.recipes")
 local item_utils = require("util.item_utils")
+local chipDatabase = require("recipe.chipDatabase")
 
-function _M.match(sourceItems)
+function _M.match(r,sourceItems)
     if sourceItems == nil or not type(sourceItems) == "table" then
         return nil
     end
 
-    local r = recipes.getRecipes()
     local source = {}
+    local toIdentity = {}
     for _, v in pairs(sourceItems) do
+        local label = v.label
         local name = v.name
-        if name then
-            local identity = item_utils.itemIdentity(v)
-            local var0 = source[identity]
+        if label then
+            local identityLabel = label            
+            local identityName = item_utils.itemIdentity(v)
+            local identityChip = chipDatabase[identityName]
+            local var0 = source[identityLabel]
             if var0 then
-                source[identity] = var0 + v.size
+                if identityChip then
+                    source[identityChip] = var0 + v.size
+                    toIdentity[identityChip] = identityName
+                else
+                    source[identityLabel] = var0 + v.size
+                    source[identityName] = var0 + v.size
+                    toIdentity[identityLabel] = identityName
+                end                   
             else
-                source[identity] = v.size
+                if identityChip then
+                    source[identityChip] = v.size
+                    toIdentity[identityChip] = identityName
+                else
+                    source[identityLabel] = v.size
+                    source[identityName] = v.size
+                    toIdentity[identityLabel] = identityName
+                end              
             end
         end
     end
-
-    for _, v in pairs(r) do
+    
+    for k, v in pairs(r) do
         local flag = true
         for __, item in pairs(v.items) do
-            local sourceAmount = source[item[1]]
+            local sourceAmount = 0
+            if source[chipDatabase[item.label]] then
+                sourceAmount = source[chipDatabase[item.label]]
+                item[1] = toIdentity[chipDatabase[item.label]]
+            elseif source[item.label] then
+                sourceAmount = source[item.label]
+                item[1] = toIdentity[item.label]
+            elseif source[item[1]] then
+                sourceAmount = source[item[1]]
+            end
             if item.type ~= "fluid" and (not sourceAmount or item.amount > sourceAmount) then
                 flag = false
                 break

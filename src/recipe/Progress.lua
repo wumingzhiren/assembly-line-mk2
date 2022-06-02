@@ -2,6 +2,7 @@ local setmetatable = setmetatable
 local transport = require("recipe.transport")
 local computer = require("computer")
 local config = require("conf.config")
+local me_controller = require("component").me_controller
 
 local _M = {}
 
@@ -19,16 +20,19 @@ function _M:new(processItem)
 end
 
 function _M:start()
-    print(self.processItem.nickname .. " processing")
+    print(self.processItem.nickname .. "is processing")
     local fluidSlot = 0
-    for _, v in pairs(self.items) do
+    for i, v in pairs(self.items) do
         local type = v.type
         print("trans item:" .. v[1] .. " type:" .. type .. " amount:" .. v.amount)
         if type == nil or type == "item" then
             self:transRecipeItem(v)
         elseif type == "molten" then
             fluidSlot = fluidSlot + 1
-            self.suckSlot[fluidSlot] = v.amount * v.times
+            self.suckSlot[fluidSlot] = {}
+            self.suckSlot[fluidSlot].amout = v.amount * v.times
+            self.suckSlot[fluidSlot].name = v.cname
+            self.suckSlot[fluidSlot].id = i
             self:transRecipeMolten(v)
         elseif type == "fluid" then
             fluidSlot = fluidSlot + 1
@@ -36,7 +40,10 @@ function _M:start()
             self:transRecipeFluid(v, fluidSlot)
         elseif type == "cell" then
             fluidSlot = fluidSlot + 1
-            self.suckSlot[fluidSlot] = v.amount * 1000
+            self.suckSlot[fluidSlot] = {}
+            self.suckSlot[fluidSlot].amout = v.amount * 1000
+            self.suckSlot[fluidSlot].name = v.cname
+            self.suckSlot[fluidSlot].id = i
             self:transRecipeCell(v, fluidSlot)
         end
     end
@@ -66,8 +73,9 @@ function _M:transRecipeCell(recipeItem, fluidSlot)
 end
 
 function _M:suckTankFluid()
-    for slot, amount in pairs(self.suckSlot) do
-        transport.suckTankFluid(slot, amount)
+    for slot, suck in pairs(self.suckSlot) do
+        local i = suck.id
+        self:transRecipeFluid(self.items[i], slot)
     end
 end
 
@@ -86,6 +94,15 @@ function _M:toItemInputBus()
     end
 end
 
+function _M:getAEStorageFluid(name)
+    for _,v in pairs(me_controller) do
+        if v.name == name then
+            return v
+        end
+        return nil
+    end
+end
+
 function _M:waiting4Fluid(maxSlot)
     local coroutines = {}
     print("maxSlot:" .. maxSlot)
@@ -93,9 +110,9 @@ function _M:waiting4Fluid(maxSlot)
         -- 创建maxSlot个coroutine
         local co = coroutine.create(function (slot, amount)
             while true do
-                local current = transport.getTankFluid(slot).amount
+                local current = self:getAEStorageFluid(self.suckSlot[i].name)
                 print("slot:" .. slot .. " need:" .. amount .. " current:" .. current)
-                if current == amount then
+                if current >= amount then
                     return true
                 end
                 coroutine.yield(false)

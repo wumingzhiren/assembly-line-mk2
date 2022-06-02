@@ -11,7 +11,7 @@ local ci_flag = false
 local co_count = 1
 local fi_count = 1
 local fif_count = 1
-local input_number = 14
+local input_number = 16
 
 thread.create(function()
     while true do

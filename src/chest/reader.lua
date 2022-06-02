@@ -5,10 +5,20 @@ local chestSourceSide = ci.chestSourceSide
 
 function _M.hasItem()
     local stacks = ci.proxy.getAllStacks(chestSourceSide)
-    if not stacks then
-        return false, nil
+    
+    local flag = false
+    local all = stacks.getAll()
+    for k,v in pairs (all) do
+        if v then
+            flag = true
+        end
     end
-    return stacks.count() > 0, stacks.getAll()
+    
+    if not flag then
+        return flag, nil
+    end
+    
+    return flag, all
 end
 
 return _M

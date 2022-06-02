@@ -31,8 +31,9 @@ function _M.all()
     --may replace the original data
     local dbSlot = getNilSlot()
     local allStacks = input.getAllStacks(inputSide).getAll()
-    for i, v in ipairs(allStacks) do
+    for i, v in pairs(allStacks) do
         if v.name == nil then
+            print("done")
             return
         end
         input.store(inputSide, i + 1, db.address, dbSlot)
@@ -44,9 +45,9 @@ end
 function _M.readAll()
     local msg = "slot:%d --> label:%s --> identity:%s"
     for i = 1, 81 do
-        local data = db.get(i + 1)
+        local data = db.get(i )
         if data then
-            print(string.format(msg, i + 1, data.label, item_utils.itemIdentity(data)))
+            print(string.format(msg, i , data.label, item_utils.itemIdentity(data)))
         end
     end
 end

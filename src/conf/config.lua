@@ -10,15 +10,17 @@ local sides = require("sides")
 
 config.chestInput.checkInterval = 3
 --me interface chest
-config.chestInput.chestSourceSide = sides.north
-config.chestInput.chestOutputSide = sides.south
+config.chestInput.chestSourceSide = sides.west
+config.chestInput.chestOutputSide = sides.east
 --molten output side
-config.chestInput.moltenOutputSide = sides.west
+config.chestInput.moltenOutputSide = sides.north
 --fluid source side
-config.fluidSourceSide = 0
-config.tankSourceSide = sides.west
+config.fluidSourceSide = sides.down
+config.tankSourceSide = config.fluidSourceSide
 --rs. side
-config.redStoneSide = 3
+config.redStoneSide = sides.east
+--flash side
+config.flashSide = sides.north
 --transposer
 config.chestInput.proxy = manager.proxy("${ci1}")
 config.fluidInput[1] = manager.proxy("${fi1}")
@@ -40,6 +42,8 @@ config.chestOutput[11] = manager.proxy("${co11}")
 config.chestOutput[12] = manager.proxy("${co12}")
 config.chestOutput[13] = manager.proxy("${co13}")
 config.chestOutput[14] = manager.proxy("${co14}")
+config.chestOutput[15] = manager.proxy("${co15}")
+config.chestOutput[16] = manager.proxy("${co16}")
 --me fluid interfaces
 config.fluidInterface[1] = manager.proxy("${fif1}")
 config.fluidInterface[2]= manager.proxy("${fif2}")

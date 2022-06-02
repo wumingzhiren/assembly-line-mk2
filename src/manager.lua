@@ -12,7 +12,7 @@ function _M.getFluidDatabase()
     return db
 end
 
-function _M.getFluidIndexByIdentity(identity)
+function _M.getFluidIndexByIdentity(identity , fluidName)
     local cache = dbCache[identity]
     if cache then
         return cache
@@ -22,6 +22,9 @@ function _M.getFluidIndexByIdentity(identity)
         local data = db.get(i)
         if data and item_utils.itemIdentity(data) == identity then
             --local hash = db.computeHash(i)
+            dbCache[identity] = i
+            return i
+        elseif data and data.fluid_name == fluidName then
             dbCache[identity] = i
             return i
         end

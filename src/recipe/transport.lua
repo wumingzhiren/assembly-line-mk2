@@ -15,11 +15,13 @@ local moltenOutputSide = ci.moltenOutputSide
 function _M.transFluid(recipeFluid, inputBusSlot)
     local fluidInput = _M.getFluidProxyBySlot(inputBusSlot)
     if not fluidInput then
+        print("fluid input " .. tostring(inputBusSlot) .. "not found plz check config")
         error("fluid input " .. tostring(inputBusSlot) .. "not found plz check config")
     end
 
     local fluidInterface = _M.getFluidInterfaceProxyBySlot(inputBusSlot)
     if not fluidInterface then
+        print("fluid interface " .. tostring(inputBusSlot) .. "not found plz check config")
         error("fluid interface " .. tostring(inputBusSlot) .. "not found plz check config")
     end
 
@@ -30,10 +32,11 @@ function _M.transFluid(recipeFluid, inputBusSlot)
     if not conf or conf.name ~= fluidName then
         --set all config the same
         local db = manager.getFluidDatabase()
-        local index = manager.getFluidIndexByIdentity(identity)
+        local index = manager.getFluidIndexByIdentity(identity , fluidName)
         if not index then
             --local craftable = fluidInterface.getCraftables({name = label})
             --print(craftable)
+            print("fluid --->" .. identity .. " is not stored in the db")
             error("fluid --->" .. identity .. " is not stored in the db")
         end
         print("set fluid interface slot:" .. inputBusSlot .. " label:" .. identity)
@@ -42,6 +45,7 @@ function _M.transFluid(recipeFluid, inputBusSlot)
         end
         local success = fluidInterface.setFluidInterfaceConfiguration(1, db.address, index)
         if not success then
+            print("set fluid interface failed, label:" .. identity .. "db index:" .. index)
             error("set fluid interface failed, label:" .. identity .. "db index:" .. index)
         end
 
@@ -60,6 +64,9 @@ function _M.transFluid(recipeFluid, inputBusSlot)
     end
 
     local amount = recipeFluid.amount
+    if recipeFluid.times then
+        amount = amount * recipeFluid.times
+    end
     while true do
         local _, transferred = fluidInput.transferFluid(fluidSourceSide, sides.top, amount)
         amount = amount - transferred
@@ -161,6 +168,7 @@ end
 function _M.transOutput(slot, item)
     local output = config.chestOutput[slot]
     if not output then
+        print("item output " .. tostring(slot) .. "not found plz check config or disable config.chestOutputMode")
         error("item output " .. tostring(slot) .. "not found plz check config or disable config.chestOutputMode")
     end
 
