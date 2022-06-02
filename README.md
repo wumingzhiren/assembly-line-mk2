@@ -12,7 +12,10 @@ wget https://gitee.com/sh0aky/assembly-line/raw/master/script
 #e.g. github script https://raw.githubusercontent.com/shoaky009/assembly-line xxxx
 script
 ```
+### 0.使用前准备
 
+#### 0.1建立流体数据
+    
 ### 1.初始化&配置
 
 #### 1.1运行initializer并按照顺序放置转运器,程序会自动写入地址到config.lua
