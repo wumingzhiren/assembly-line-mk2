@@ -5,6 +5,7 @@ local MOLTEN = "molten"
 local FLUID = "fluid"
 
 local config = require("conf.config")
+local moltenCtrl = config.moltenCtrl
 local flashTable = require("component").inventory_controller.getAllStacks(config.flashSide).getAll()
 local utils = require("util.Utils")
 
@@ -75,7 +76,7 @@ function _M.getRecipes()
     --建立流体容器和物品对应关系
     for k,v in pairs(label2Fluid) do
         v.type = FLUID
-        if string.sub(v.name,0,7) == "molten." then
+        if moltenCtrl and string.sub(v.name,0,7) == "molten." then
             v.type = MOLTEN
             local tmp = split(v.container,'@')
             v.itemId = tmp[2]

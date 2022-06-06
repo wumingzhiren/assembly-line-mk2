@@ -9,6 +9,8 @@ local manager = require("manager")
 local sides = require("sides")
 
 config.chestInput.checkInterval = 3
+--using this program to ctrl molten items
+config.moltenCtrl = true
 --me interface chest
 config.chestInput.chestSourceSide = sides.west
 config.chestInput.chestOutputSide = sides.east
