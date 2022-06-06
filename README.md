@@ -131,6 +131,8 @@ config.moltenCtrl = true
 
 > 4. 安装完毕正常运行后不要拆除任何oc的组件 否则地址会更变 你需要手动修改或者拆除所有oc转运器和me流体接口config.lua需要重新下载 然后运行initializer进行安装
 
+> 5. 熔融物品写配方时，144mb整数倍的请使用锭形式，72mb的请使用杆形式，36mb的请使用2个螺栓形式
+
 
 ## 参考视频
 https://www.bilibili.com/video/BV1iz4y1274d/
