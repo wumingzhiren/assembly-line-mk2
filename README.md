@@ -14,6 +14,8 @@ wget https://gitee.com/is-anonymous-used-by-anyone/assembly-line-mk2/raw/master/
 #e.g. github script https://raw.githubusercontent.com/shoaky009/assembly-line xxxx
 script
 ```
+
+
 ### 1.使用前准备
 
 若您的GTNH版本为2123QF及以前，则无需进行以下下步骤。若您的GTNH版本高于2123QF，请进行此步骤以更新可能存在的流体及物品更新
@@ -22,9 +24,9 @@ script
 >
 > 1. 按"e"打开nei界面，点击左下角扳手，并依次点击工具-数据存储-nei整合中的流体和流体容器两项
 >
-> 2. 在".minecraft\dumps\"文件夹中找到"fluid.csv"、"fluidcontainer.csv"两个文件，使用记事本打开这两个文件，以UTF-8格式另存。
+> 2. 在".minecraft\dumps\"文件夹中找到"fluid.csv"、"fluidcontainer.csv"两个文件，使用记事本打开这两个文件，以UTF-8格式另存，并剪切至其他文件夹备用。
 >
-> 3. 执行脚本后，将以上两个文件复制进".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\conf\"文件夹中。
+> 3. 将以上两个文件复制进".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\conf\"文件夹中。
 
 #### 1.2更新电路数据
 > 
@@ -62,11 +64,16 @@ config.chestInput.moltenOutputSide = sides.north
 ```lua
 config.fluidSourceSide = sides.bottom
 ```
+#### 2.6设置用于输入总线的转运器的输入与输出方向
+```lua
+config.chestOutput.chestSourceSide = sides.down
+config.chestOutput.chestOutputSide = sides.up
+```
 
-#### 2.6如果要用oc把原料送到输入总线,需要放末影箱在输入总线下的转运器下，并且所有都在同一频道
+#### 2.7如果要用oc把原料送到输入总线,需要放末影箱在输入总线下的转运器下，并且所有都在同一频道
 >如果你有其他方法实现输入总线内有物品就不输送进去 并且按照输出箱的物品循序来抽取可以不用配置这些东西
 
-#### 2.7如果要用其他方法处理熔融流体，将下句中"true"改为"false
+#### 2.8如果要用其他方法处理熔融流体，将下句中"true"改为"false
 ```lua
 config.moltenCtrl = true
 ```
@@ -134,6 +141,8 @@ config.moltenCtrl = true
 > 4. 安装完毕正常运行后不要拆除任何oc的组件 否则地址会更变 你需要手动修改或者拆除所有oc转运器和me流体接口config.lua需要重新下载 然后运行initializer进行安装
 
 > 5. 熔融物品写配方时，144mb整数倍的请使用锭形式，72mb的请使用杆形式，36mb的请使用2个螺栓形式
+
+> 6. 该脚本暂不支持服务器端使用，服务器端小伙伴请静待更新
 
 
 ## 参考视频

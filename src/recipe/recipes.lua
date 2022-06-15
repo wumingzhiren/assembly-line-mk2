@@ -43,8 +43,8 @@ function _M.getRecipes()
     --开始进行流体数据转换
     
     --读取流体及流体容器数据
-    local AllFluidNameTable = utils.loadCsvFile("./conf/fluid.csv") 
-    local AllFluidContainerNameTable = utils.loadCsvFile("./conf/fluidcontainer.csv") 
+    local AllFluidNameTable = utils.loadCsvFile("./conf/fluid.csv")
+    local AllFluidContainerNameTable = utils.loadCsvFile("./conf/fluidcontainer.csv")
     
     --建立流体label和id对应关系
     local label2Fluid = {}

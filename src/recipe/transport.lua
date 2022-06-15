@@ -7,6 +7,7 @@ local fluidSourceSide = config.fluidSourceSide
 local tankSourceSide = config.tankSourceSide
 
 local ci = config.chestInput
+local co = config.chestOutput
 local inputProxy = ci.proxy
 local chestSourceSide = ci.chestSourceSide
 local chestOutputSide = ci.chestOutputSide
@@ -184,7 +185,7 @@ function _M.transOutput(slot, item)
     --默认底部和顶部
     local sourceSlots = _M.getSlotByIdentity(item[1], item.amount, chestOutputSide)
     for _, v in ipairs(sourceSlots) do
-        output.transferItem(0, 1, v.size, v.slot, 1)
+        output.transferItem(co.chestSourceSide, co.chestOutputSide, v.size, v.slot, 1)
     end
 end
 

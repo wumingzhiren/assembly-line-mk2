@@ -14,6 +14,9 @@ config.moltenCtrl = true
 --me interface chest
 config.chestInput.chestSourceSide = sides.west
 config.chestInput.chestOutputSide = sides.east
+--input bus chest
+config.chestOutput.chestSourceSide = sides.down
+config.chestOutput.chestOutputSide = sides.up
 --molten output side
 config.chestInput.moltenOutputSide = sides.north
 --fluid source side
