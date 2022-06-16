@@ -1,0 +1,6 @@
+[submodule "Magik6k-Programs"]
+	path = Magik6k-Programs
+	url = https://github.com/OpenPrograms/Magik6k-Programs.git
+[submodule "lua-nbt"]
+	path = lua-nbt
+	url = https://github.com/MikuAuahDark/lua-nbt.git
