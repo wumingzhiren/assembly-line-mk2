@@ -1,6 +1,6 @@
 local _M = {}
 
-function split( str,reps )
+function _M.split( str,reps )
     local resultStrList = {}
     string.gsub(str,'[^'..reps..']+',function ( w )
         table.insert(resultStrList,w)

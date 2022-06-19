@@ -3,19 +3,13 @@ local R = {}
 local ITEM = "item"
 local MOLTEN = "molten"
 local FLUID = "fluid"
+local libItem = require(Utils.libItem)
 
 local config = require("conf.config")
 local moltenCtrl = config.moltenCtrl
 local flashTable = require("component").inventory_controller.getAllStacks(config.flashSide).getAll()
 local utils = require("util.Utils")
 
-function split( str,reps )
-    local resultStrList = {}
-    string.gsub(str,'[^'..reps..']+',function ( w )
-        table.insert(resultStrList,w)
-    end)
-    return resultStrList
-end
 
 function _M.getRecipes()
     
@@ -35,6 +29,7 @@ function _M.getRecipes()
             R[i+1].items[flashTable[i].inputItems.n + j].label = flashTable[i].inputFluids[j][1]
             R[i+1].items[flashTable[i].inputItems.n + j].amount = flashTable[i].inputFluids[j][2]
             R[i+1].items[flashTable[i].inputItems.n + j].type = FLUID
+            R[i+1].items[flashTable[i].inputItems.n + j].cname = libItem.readNbt(flashTable[i])._value["f"..tostring(j-1)].name._value
         end
         
         R[i+1].nickname = flashTable[i].output
@@ -43,22 +38,15 @@ function _M.getRecipes()
     --开始进行流体数据转换
     
     --读取流体及流体容器数据
-    local AllFluidNameTable = utils.loadCsvFile("./conf/fluid.csv")
     local AllFluidContainerNameTable = utils.loadCsvFile("./conf/fluidcontainer.csv")
     
-    --建立流体label和id对应关系
+    --建立流体id空表
     local label2Fluid = {}
     
     for i = 1,#R do
         for j = 1,#R[i].items do
-            if R[i].items[j].type == FLUID and label2Fluid[R[i].items[j].label] == nil then
-                label2Fluid[R[i].items[j].label] = {}
-                local len2 = #AllFluidNameTable
-                for k = 1,len2 do
-                    if R[i].items[j].label == AllFluidNameTable[k]["Localized Name"] then
-                        label2Fluid[R[i].items[j].label].name = AllFluidNameTable[k].Name
-                    end
-                end
+            if R[i].items[j].type == FLUID and label2Fluid[R[i].items[j].cname] == nil then
+                label2Fluid[R[i].items[j].cname] = {}
             end
         end
     end
@@ -66,9 +54,9 @@ function _M.getRecipes()
     
     for k,v in pairs(label2Fluid) do
         for k1,v1 in pairs(AllFluidContainerNameTable) do
-            if v.name == v1.Fluid and v1["Empty Container Item"] == "IC2:itemCellEmpty" then
-               label2Fluid[k].container = string.sub(v1["Filled Container"],3)
-               label2Fluid[k].containerItem = v1["Filled Container Item"]
+            if k == v1.Fluid and v1["Empty Container Item"] == "IC2:itemCellEmpty" then
+               v.container = string.sub(v1["Filled Container"],3)
+               v.containerItem = v1["Filled Container Item"]
                break
             end
         end
@@ -76,9 +64,9 @@ function _M.getRecipes()
     --建立流体容器和物品对应关系
     for k,v in pairs(label2Fluid) do
         v.type = FLUID
-        if moltenCtrl and string.sub(v.name,0,7) == "molten." then
+        if moltenCtrl and string.sub(k,0,7) == "molten." then
             v.type = MOLTEN
-            local tmp = split(v.container,'@')
+            local tmp = utils.split(v.container,'@')
             v.itemId = tmp[2]
             if v.containerItem == "gregtech:gt.metaitem.99" then
                 v.itemPrefix = "gregtech:gt.metaitem.01"
@@ -95,23 +83,19 @@ function _M.getRecipes()
     for k,v in pairs (R) do
         for k1,v1 in pairs (v.items) do
             if v1.type == FLUID then
-                v1[1] = string.gsub(label2Fluid[v1.label].container,'@','.')
-                v1.cname = label2Fluid[v1.label].name
-                if label2Fluid[v1.label].type == MOLTEN then
+                v1[1] = string.gsub(label2Fluid[v1.cname].container,'@','.')
+                v1.cname = label2Fluid[v1.cname].name
+                if label2Fluid[v1.cname].type == MOLTEN then
                     v1.type = MOLTEN
-                    if v1.amount == 36 then
-                        v1[1] = label2Fluid[v1.label].itemPrefix..".26"..label2Fluid[v1.label].itemId
-                        v1.amount = 2
+                    if v1.amount < 144 then
+                        v1[1] = label2Fluid[v1.cname].itemPrefix..".26"..label2Fluid[v1.cname].itemId
+                        v1.amount = v1.amount / 36
                         v1.times = 18
-                    elseif v1.amount == 72 then
-                        v1[1] = label2Fluid[v1.label].itemPrefix..".23"..label2Fluid[v1.label].itemId
-                        v1.amount = 1
-                        v1.times = 72
                     else
-                        if label2Fluid[v1.label].itemPrefix == "gregtech:gt.metaitem.01" then
-                            v1[1] = label2Fluid[v1.label].itemPrefix..".11"..label2Fluid[v1.label].itemId
+                        if label2Fluid[v1.cname].itemPrefix == "gregtech:gt.metaitem.01" then
+                            v1[1] = label2Fluid[v1.cname].itemPrefix..".11"..label2Fluid[v1.cname].itemId
                         else
-                            v1[1] = label2Fluid[v1.label].itemPrefix.."."..label2Fluid[v1.label].itemId
+                            v1[1] = label2Fluid[v1.cname].itemPrefix.."."..label2Fluid[v1.cname].itemId
                         end
                         v1.amount = v1.amount / 144
                         v1.times = 144
