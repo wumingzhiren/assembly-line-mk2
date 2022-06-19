@@ -64,10 +64,10 @@ function _M.getRecipes()
     --建立流体容器和物品对应关系
     for k,v in pairs(label2Fluid) do
         v.type = FLUID
+        local tmp = utils.split(v.container,'@')
+        v.itemId = tmp[2]
         if moltenCtrl and string.sub(k,0,7) == "molten." then
             v.type = MOLTEN
-            local tmp = utils.split(v.container,'@')
-            v.itemId = tmp[2]
             if v.containerItem == "gregtech:gt.metaitem.99" then
                 v.itemPrefix = "gregtech:gt.metaitem.01"
             elseif v.containerItem == "bartworks:gt.bwMetaGeneratedcellMolten" then
@@ -83,7 +83,7 @@ function _M.getRecipes()
     for k,v in pairs (R) do
         for k1,v1 in pairs (v.items) do
             if v1.type == FLUID then
-                v1[1] = label2Fluid[v1.cname].containerItem
+                v1[1] = label2Fluid[v1.cname].containerItem.."."..label2Fluid[v1.cname].itemId
                 if label2Fluid[v1.cname].type == MOLTEN then
                     v1.type = MOLTEN
                     if v1.amount < 144 then
