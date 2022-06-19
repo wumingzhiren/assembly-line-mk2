@@ -1,4 +1,5 @@
 local shell = require "shell"
+local fs = require("filesystem")
 local default_repo = "https://raw.githubusercontent.com/wumingzhiren/assembly-line-mk2/"
 local default_branch = "master"
 local template = "wget %s/%s"
@@ -38,10 +39,18 @@ shell.execute(prefix .. "/src/util/db.lua "  .. dir .. "/util/db.lua")
 shell.execute(prefix .. "/src/util/item_utils.lua "  .. dir .. "/util/item_utils.lua")
 shell.execute(prefix .. "/src/util/readitem.lua "  .. dir .. "/util/readitem.lua")
 shell.execute(prefix .. "/src/util/Utils.lua "  .. dir .. "/util/Utils.lua")
-
-shell.execute("mkdir /usr/lib/")
-shell.execute("wget https://raw.githubusercontent.com/OpenPrograms/Magik6k-Programs/master/libcrc32/crc32.lua /usr/lib/crc32.lua")
-shell.execute("wget https://raw.githubusercontent.com/OpenPrograms/Magik6k-Programs/master/libdeflate/deflate.lua /usr/lib/deflate.lua")
-shell.execute("wget https://raw.githubusercontent.com/MikuAuahDark/lua-nbt/master/nbt.lua /usr/lib/nbt.lua")
-
+shell.execute(prefix .. "/src/util/libItem.lua "  .. dir .. "/util/libItem.lua")
+if not fs.exists("/usr/lib/") then
+    shell.execute("mkdir /usr/lib/")
+end
+if not fs.exists("/usr/lib/crc32.lua") then
+    shell.execute("wget https://raw.githubusercontent.com/OpenPrograms/Magik6k-Programs/master/libcrc32/crc32.lua /usr/lib/crc32.lua")
+end
+if not fs.exists("/usr/lib/deflate.lua") then
+    shell.execute("wget https://raw.githubusercontent.com/OpenPrograms/Magik6k-Programs/master/libdeflate/deflate.lua /usr/lib/deflate.lua")
+end
+if not fs.exists("/usr/lib/nbt.lua") then
+    shell.execute("wget https://raw.githubusercontent.com/MikuAuahDark/lua-nbt/master/nbt.lua /usr/lib/nbt.lua")
+end
+    print("")
 print("installed successfully! plz read https://github.com/shoaky009/assembly-line/blob/master/README.md, and edit conf/config.lua make it work")
