@@ -39,6 +39,7 @@ shell.execute(prefix .. "/src/util/item_utils.lua "  .. dir .. "/util/item_utils
 shell.execute(prefix .. "/src/util/readitem.lua "  .. dir .. "/util/readitem.lua")
 shell.execute(prefix .. "/src/util/Utils.lua "  .. dir .. "/util/Utils.lua")
 
+shell.execute("mkdir /usr/lib/")
 shell.execute("wget https://raw.githubusercontent.com/OpenPrograms/Magik6k-Programs/master/libcrc32/crc32.lua /usr/lib/crc32.lua")
 shell.execute("wget https://raw.githubusercontent.com/OpenPrograms/Magik6k-Programs/master/libdeflate/deflate.lua /usr/lib/deflate.lua")
 shell.execute("wget https://raw.githubusercontent.com/MikuAuahDark/lua-nbt/master/nbt.lua /usr/lib/nbt.lua")
