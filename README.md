@@ -22,11 +22,11 @@ script
 
 #### 1.1建立流体数据
 >
-> 1. 按"e"打开nei界面，点击左下角扳手，并依次点击工具-数据存储-nei整合中的流体和流体容器两项
+> 1. 按"e"打开nei界面，点击左下角扳手，并依次点击工具-数据存储-nei整合中的流体容器项
 >
-> 2. 在".minecraft\dumps\"文件夹中找到"fluid.csv"、"fluidcontainer.csv"两个文件，使用记事本打开这两个文件，以UTF-8格式另存，并剪切至其他文件夹备用。
+> 2. 在".minecraft\dumps\"文件夹中找到"fluidcontainer.csv"文件，使用记事本打开这个文件，以UTF-8格式另存，并剪切至其他文件夹备用。
 >
-> 3. 将以上两个文件复制进".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\conf\"文件夹中。
+> 3. 将以上文件复制进".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\conf\"文件夹中。
 
 #### 1.2更新电路数据
 > 
