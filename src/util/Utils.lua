@@ -2,6 +2,7 @@ local _M = {}
 
 function _M.split( str,reps )
     local resultStrList = {}
+---@diagnostic disable-next-line: discard-returns
     string.gsub(str,'[^'..reps..']+',function ( w )
         table.insert(resultStrList,w)
     end)
@@ -14,17 +15,17 @@ function _M.loadCsvFile(filePath)
     local data = file:read("*a")
     io.close(file)
     -- 按行划分
-    local lineStr = split(data, '\n\r')
+    local lineStr = _M.split(data, '\n\r')
 
     --[[
         第一行是字段
     ]]
-    local titles = split(lineStr[1], ",")
+    local titles = _M.split(lineStr[1], ",")
     local ID = 1
     local arrs = {}
     for i = 2, #lineStr, 1 do
         -- 一行中，每一列的内容
-        local content = split(lineStr[i], ",")
+        local content = _M.split(lineStr[i], ",")
 
         -- 以标题作为索引，保存每一列的内容，取值的时候这样取：arrs[1].Title
         arrs[ID] = {}

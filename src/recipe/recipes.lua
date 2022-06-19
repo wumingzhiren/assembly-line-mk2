@@ -3,7 +3,7 @@ local R = {}
 local ITEM = "item"
 local MOLTEN = "molten"
 local FLUID = "fluid"
-local libItem = require(Utils.libItem)
+local libItem = require("util.libItem")
 
 local config = require("conf.config")
 local moltenCtrl = config.moltenCtrl
