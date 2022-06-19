@@ -29,7 +29,7 @@ function _M.getRecipes()
             R[i+1].items[flashTable[i].inputItems.n + j].label = flashTable[i].inputFluids[j][1]
             R[i+1].items[flashTable[i].inputItems.n + j].amount = flashTable[i].inputFluids[j][2]
             R[i+1].items[flashTable[i].inputItems.n + j].type = FLUID
-            R[i+1].items[flashTable[i].inputItems.n + j].cname = libItem.readNbt(flashTable[i])._value["f"..tostring(j-1)].name._value
+            R[i+1].items[flashTable[i].inputItems.n + j].cname = libItem.readNbt(flashTable[i])._value["f"..tostring(j-1)]._value.FluidName._value
         end
         
         R[i+1].nickname = flashTable[i].output
@@ -84,7 +84,6 @@ function _M.getRecipes()
         for k1,v1 in pairs (v.items) do
             if v1.type == FLUID then
                 v1[1] = string.gsub(label2Fluid[v1.cname].container,'@','.')
-                v1.cname = label2Fluid[v1.cname].name
                 if label2Fluid[v1.cname].type == MOLTEN then
                     v1.type = MOLTEN
                     if v1.amount < 144 then

@@ -29,18 +29,19 @@ function _M.transFluid(recipeFluid, inputBusSlot)
     local conf = fluidInterface.getFluidInterfaceConfiguration(1)
     local identity = recipeFluid[1]
     local fluidName = recipeFluid.cname
+    local fluidLabel = recipeFluid.label
     --配置与配方不一样或者没有
     if not conf or conf.name ~= fluidName then
         --set all config the same
         local db = manager.getFluidDatabase()
-        local index = manager.getFluidIndexByIdentity(identity , fluidName)
+        local index = manager.getFluidIndexByIdentity(identity , fluidLabel)
         if not index then
             --local craftable = fluidInterface.getCraftables({name = label})
             --print(craftable)
-            print("fluid --->" .. identity .. " is not stored in the db")
-            error("fluid --->" .. identity .. " is not stored in the db")
+            print("fluid --->" .. fluidLabel .. " is not stored in the db")
+            error("fluid --->" .. fluidLabel .. " is not stored in the db")
         end
-        print("set fluid interface slot:" .. inputBusSlot .. " label:" .. identity)
+        print("set fluid interface slot:" .. inputBusSlot .. " label:" .. fluidLabel)
         if conf then
             print(conf.name)
         end
