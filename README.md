@@ -29,8 +29,8 @@ script
 > 3. 将以上文件内容覆盖"工作文件夹\assembly-line-mk2\conf\"文件夹中。
 
 #### 1.2更新电路数据
-> 
-> 1. 打开".minecraft\你的存档文件夹\opencomputer\{电脑的硬盘uuid}\工作文件夹\assembly-line-mk2\recipe\"中的"chipDatabase.lua"文件，核对电路板的名称及物品id
+
+>  打开"工作文件夹\assembly-line-mk2\recipe\"中的"chipDatabase.lua"文件，核对电路板的名称及物品id
 
 
 ### 2.初始化&配置
