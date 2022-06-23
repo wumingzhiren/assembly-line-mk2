@@ -101,11 +101,6 @@ config.moltenCtrl = true
 >main (启动完毕后每2秒会到箱子里匹配物品)
 >
 >Ctrl + C (关闭程序)
->
->tools/readlabel (把物品放在原料箱里运行这个程序会打印出箱子内物品的label方便写配方)
->
->tools/db (把流体单元放入原料箱的第一个位置,用来记录到流体单元db)
-
 
 ### 6.util说明
 
