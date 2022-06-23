@@ -30,7 +30,7 @@ script
 
 #### 1.2更新电路数据
 
->  打开"工作文件夹\assembly-line-mk2\recipe\"中的"chipDatabase.lua"文件，核对电路板的名称及物品id
+>  打开"工作文件夹\assembly-line-mk2\recipe\"中的"chipDatabase.lua"文件，核对电路板的名称及物品id。若您的单机端或服务端未使用kiwi对应版本的汉化，请自行修改对应电路板的名称。
 
 
 ### 2.初始化&配置
