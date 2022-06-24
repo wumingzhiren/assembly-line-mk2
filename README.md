@@ -48,6 +48,9 @@ script
 > 再次说明顺序很重要中途有任何错误都会导致程序无法运行 如果放错请ctrl+c退出重新来过
 
 #### 2.2设置转运器与原材料箱的面
+>cd assembly-line-mk2
+>edit conf/conf.lua
+
 >具体sides的定义查看官网API https://ocdoc.cil.li/api:sides
 ```lua
 config.chestInput.chestSourceSide = sides.top
@@ -86,6 +89,9 @@ config.redStoneSide = sides.east
 config.flashSide = sides.north
 ```
 >3. 在其他适配器中放置一个"超级数据库升级"
+
+#### 2.9 保存并退出config.lua编辑，并重启
+按“ctrl+S”键保存更改，再按“ctrl+W”键关闭编辑窗口，最后输入reboot命令重启
 
 ### 3.设置其他外围组件
 
