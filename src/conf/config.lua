@@ -21,6 +21,7 @@ config.chestOutput.chestOutputSide = sides.up
 config.chestInput.moltenOutputSide = sides.north
 --fluid source side
 config.fluidSourceSide = sides.down
+config.fluidOutputSide = sides.up
 config.tankSourceSide = config.fluidSourceSide
 --rs. side
 config.redStoneSide = sides.east

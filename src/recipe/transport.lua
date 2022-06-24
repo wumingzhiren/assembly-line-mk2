@@ -4,6 +4,7 @@ local sides = require("sides")
 local manager = require("manager")
 local item_utils = require("util.item_utils")
 local fluidSourceSide = config.fluidSourceSide
+local fluidOutputSide = config.fluidOutputSide
 local tankSourceSide = config.tankSourceSide
 
 local ci = config.chestInput
@@ -70,7 +71,7 @@ function _M.transFluid(recipeFluid, inputBusSlot)
         amount = amount * recipeFluid.times
     end
     while true do
-        local _, transferred = fluidInput.transferFluid(fluidSourceSide, sides.top, amount)
+        local _, transferred = fluidInput.transferFluid(fluidSourceSide, fluidOutputSide, amount)
         amount = amount - transferred
         if amount <= 0 then
             break

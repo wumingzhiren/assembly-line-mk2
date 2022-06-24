@@ -60,9 +60,10 @@ config.chestInput.chestOutputSide = sides.west
 ```lua
 config.chestInput.moltenOutputSide = sides.north
 ```
-#### 2.5设置流体输入面
+#### 2.5设置流体输入输出面
 ```lua
-config.fluidSourceSide = sides.bottom
+config.fluidSourceSide = sides.down
+config.fluidOutputSide = sides.up
 ```
 #### 2.6设置用于输入总线的转运器的输入与输出方向
 ```lua
@@ -70,13 +71,21 @@ config.chestOutput.chestSourceSide = sides.down
 config.chestOutput.chestOutputSide = sides.up
 ```
 
-#### 2.7如果要用oc把原料送到输入总线,需要放末影箱在输入总线下的转运器下，并且所有都在同一频道
->如果你有其他方法实现输入总线内有物品就不输送进去 并且按照输出箱的物品循序来抽取可以不用配置这些东西
-
-#### 2.8如果要用其他方法处理熔融流体，将下句中"true"改为"false
+#### 2.7如果要用其他方法处理熔融流体，将下句中"true"改为"false
 ```lua
 config.moltenCtrl = true
 ```
+
+#### 2.8 其他OC组件
+>1. 紧贴装配线主方块放置一个红石I/O端口并接入OC网络，配套安装一个"设备活跃探测覆盖板"以探测工作进程，并根据方向读取方向（若不安装覆盖板，程序仍可运行，但会有一定显示错误）
+```lua
+config.redStoneSide = sides.east
+```
+>2. 紧贴数据库接口放置一个适配器，在其中放置一个"物品栏控制器升级"，并根据方向配置数据库接口读取方向
+```lua
+config.flashSide = sides.north
+```
+>3. 在其他适配器中放置一个"超级数据库升级"
 
 ### 3.设置其他外围组件
 
@@ -86,10 +95,6 @@ config.moltenCtrl = true
 >该AE子网通过一个流体存储总线（只读模式）读取主AE网络ME流体接口，以使用主网络中流体
 #### 3.2 提取组件
 >提取出流体应输入子网中任意一个ME流体接口
-#### 3.3 其他OC组件
->1. 紧贴装配线主方块放置一个红石I/O端口并接入OC网络，配套安装一个"设备活跃探测覆盖板"以探测工作进程
->2. 紧贴数据库接口放置一个适配器，在其中放置一个"物品栏控制器升级"
->3. 在其他适配器中放置一个"超级数据库升级"
  
 ### 4.设置流体到db中
 
