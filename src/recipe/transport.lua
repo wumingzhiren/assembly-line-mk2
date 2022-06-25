@@ -176,11 +176,11 @@ function _M.transOutput(slot, item)
     end
 
     while true do
-        local stack = output.getStackInSlot(1, 1)
-        if not stack or (stack.label == item[1] and stack.size + item.amount <= 64) then
+        local stack = output.getStackInSlot(co.chestOutputSide, 1)
+        if not stack or (stack.label == item.label and stack.size + item.amount <= 64) then
             break
         end
-        print("waiting for available slot, recipe:" .. item[1] .. " need:" .. item.amount ..
+        print("waiting for available slot, recipe:" .. item.label .. " need:" .. item.amount ..
                 " ,slotItem:" .. stack.label .. " size:" .. stack.size)
         os.sleep(1)
     end
