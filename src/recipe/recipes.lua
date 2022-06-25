@@ -63,6 +63,7 @@ function _M.getRecipes()
     end
     --建立流体容器和物品对应关系
     for k,v in pairs(label2Fluid) do
+        print(k,v.container)
         v.type = FLUID
         local tmp = utils.split(v.container,'@')
         v.itemId = tmp[2]

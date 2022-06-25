@@ -146,7 +146,7 @@ config.flashSide = sides.north
 
 > 4. 安装完毕正常运行后不要拆除任何oc的组件 否则地址会更变 你需要手动修改或者拆除所有oc转运器和me流体接口config.lua需要重新下载 然后运行initializer进行安装
 
-> 5. 熔融物品写配方时，144mb整数倍的请使用锭形式，小于144mb的请使用多个螺栓形式
+> 5. 熔融物品写配方时，144mb整数倍的请使用锭形式，小于144mb的请使用多个螺栓形式;非熔融流体直接从主网络提取，无需写入配方
 
 > 6. 若您遇到"too long without yielding"错误，请将OC设置文件OpenComputers.cfg296行timeout数值适当放大，默认为5，适当向大处调整
 
