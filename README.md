@@ -148,6 +148,8 @@ config.flashSide = sides.north
 
 > 5. 熔融物品写配方时，144mb整数倍的请使用锭形式，小于144mb的请使用多个螺栓形式
 
+> 6. 若您遇到"too long without yielding"错误，请将OC设置文件OpenComputers.cfg296行timeout数值适当放大，默认为5，适当向大处调整
+
 
 ## 参考视频
 https://www.bilibili.com/video/BV1iz4y1274d/
