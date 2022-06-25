@@ -116,6 +116,14 @@ chipDatabase['超时空处理器主机'] = 'max'
 
 chipDatabase['gregtech:gt.metaitem.03.32177'] = 'max'
 
+chipDatabase['PTMEG橡胶板'] = 'rabberPlate'
+chipDatabase['丁苯橡胶片'] = 'rabberPlate'
+chipDatabase['硅橡胶片'] = 'rabberPlate'
+
+chipDatabase['bartworks:gt.bwMetaGeneratedplate.11312'] = 'rabberPlate'
+chipDatabase['gregtech:gt.metaitem.01.17471'] = 'rabberPlate'
+chipDatabase['gregtech:gt.metaitem.01.17635'] = 'rabberPlate'
+
 return chipDatabase
 
 
