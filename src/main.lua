@@ -42,6 +42,7 @@ function Main.loop()
         Processing = true
         pg:start()
         Processing = false
+        print(recipe.nickname.." crafted")
     end
 end
 

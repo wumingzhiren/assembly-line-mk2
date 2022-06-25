@@ -53,7 +53,7 @@ function _M.transFluid(recipeFluid, inputBusSlot)
         end
 
         while true do
-            local fluid = fluidInput.getFluidInTank(0, 1)
+            local fluid = fluidInput.getFluidInTank(fluidSourceSide, 1)
             if fluid and fluid.name == fluidName then
                 break
             end
