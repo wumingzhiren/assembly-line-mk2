@@ -74,7 +74,7 @@ config.chestOutput.chestSourceSide = sides.down
 config.chestOutput.chestOutputSide = sides.up
 ```
 
-#### 2.7如果要用其他方法处理熔融流体，将下句中"true"改为"false
+#### 2.7如果要用AE直接发配熔融流体，将下句中"true"改为"false
 ```lua
 config.moltenCtrl = true
 ```
@@ -146,7 +146,8 @@ config.flashSide = sides.north
 
 > 4. 安装完毕正常运行后不要拆除任何oc的组件 否则地址会更变 你需要手动修改或者拆除所有oc转运器和me流体接口config.lua需要重新下载 然后运行initializer进行安装
 
-> 5. 熔融物品写配方时，144mb整数倍的请使用锭形式，小于144mb的请使用多个螺栓形式;非熔融流体直接从主网络提取，无需写入配方
+> 5. 设置config.moltenCtrl = true，即使用OC处理熔融物品时。写配方需注意，144mb整数倍的使用锭形式，小于144mb的请将所有原料乘以(144/流体量），再使用锭形式，一次合成多个;非熔融流体直接发送至AE子网即可，无需写入配方。非熔融流体也可直接从主网络提取。
+>    设置config.moltenCtrl = false,即不使用OC处理熔融物品时，流体直接发送至AE子网即可。也可直接从主网络提取。
 
 > 6. 若您遇到"too long without yielding"错误，请将OC设置文件OpenComputers.cfg296行timeout数值适当放大，默认为5，适当向大处调整
 

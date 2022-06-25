@@ -81,28 +81,26 @@ function _M.getRecipes()
     
     --将R中熔融流体转化为对应物品
     
-    for k,v in pairs (R) do
-        for k1,v1 in pairs (v.items) do
+    for _,v in pairs (R) do
+        for _,v1 in pairs (v.items) do
             if v1.type == FLUID then
                 v1[1] = label2Fluid[v1.cname].containerItem.."."..label2Fluid[v1.cname].itemId
                 if label2Fluid[v1.cname].type == MOLTEN then
                     v1.type = MOLTEN
                     if v1.amount < 144 then
-                        v1.containerItem = v1[1]
-                        v1[1] = label2Fluid[v1.cname].itemPrefix..".26"..label2Fluid[v1.cname].itemId
-                        v1.amount = v1.amount / 18
-                        v1.times = 18
-                    else
-                        if label2Fluid[v1.cname].itemPrefix == "gregtech:gt.metaitem.01" then
-                            v1.containerItem = v1[1]
-                            v1[1] = label2Fluid[v1.cname].itemPrefix..".11"..label2Fluid[v1.cname].itemId
-                        else
-                            v1.containerItem = v1[1]
-                            v1[1] = label2Fluid[v1.cname].itemPrefix.."."..label2Fluid[v1.cname].itemId
+                        local tmpTimes = 144 / v1.amount
+                        for _,v2 in pairs (v.items) do
+                            v2.amount = v2.amount * tmpTimes
                         end
-                        v1.amount = v1.amount / 144
-                        v1.times = 144
                     end
+                    v1.containerItem = v1[1]
+                    if label2Fluid[v1.cname].itemPrefix == "gregtech:gt.metaitem.01" then
+                        v1[1] = label2Fluid[v1.cname].itemPrefix..".11"..label2Fluid[v1.cname].itemId
+                    else
+                        v1[1] = label2Fluid[v1.cname].itemPrefix.."."..label2Fluid[v1.cname].itemId
+                    end
+                    v1.amount = v1.amount / 144
+                    v1.times = 144
                 end
             end
         end
