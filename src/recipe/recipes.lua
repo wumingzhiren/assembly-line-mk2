@@ -63,7 +63,7 @@ function _M.getRecipes()
     end
     --建立流体容器和物品对应关系
     for k,v in pairs(label2Fluid) do
-        print(k,v.container)
+        --print(k,v.container)
         v.type = FLUID
         local tmp = utils.split(v.container,'@')
         v.itemId = tmp[2]
@@ -88,13 +88,16 @@ function _M.getRecipes()
                 if label2Fluid[v1.cname].type == MOLTEN then
                     v1.type = MOLTEN
                     if v1.amount < 144 then
+                        v1.containerItem = v1[1]
                         v1[1] = label2Fluid[v1.cname].itemPrefix..".26"..label2Fluid[v1.cname].itemId
                         v1.amount = v1.amount / 18
                         v1.times = 18
                     else
                         if label2Fluid[v1.cname].itemPrefix == "gregtech:gt.metaitem.01" then
+                            v1.containerItem = v1[1]
                             v1[1] = label2Fluid[v1.cname].itemPrefix..".11"..label2Fluid[v1.cname].itemId
                         else
+                            v1.containerItem = v1[1]
                             v1[1] = label2Fluid[v1.cname].itemPrefix.."."..label2Fluid[v1.cname].itemId
                         end
                         v1.amount = v1.amount / 144

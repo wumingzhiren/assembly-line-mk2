@@ -27,7 +27,7 @@ function _M.transFluid(recipeFluid, inputBusSlot)
         error("fluid interface " .. tostring(inputBusSlot) .. "not found plz check config")
     end
 
-    local conf = fluidInterface.getFluidInterfaceConfiguration(1)
+    local conf = fluidInterface.getFluidInterfaceConfiguration(5)
     local identity = recipeFluid[1]
     local fluidName = recipeFluid.cname
     local fluidLabel = recipeFluid.label
@@ -35,7 +35,7 @@ function _M.transFluid(recipeFluid, inputBusSlot)
     if not conf or conf.name ~= fluidName then
         --set all config the same
         local db = manager.getFluidDatabase()
-        local index = manager.getFluidIndexByIdentity(identity , fluidName)
+        local index = manager.getFluidIndexByRecipeFluidy(recipeFluid)
         if not index then
             --local craftable = fluidInterface.getCraftables({name = label})
             --print(craftable)
@@ -46,7 +46,7 @@ function _M.transFluid(recipeFluid, inputBusSlot)
         if conf then
             print(conf.name)
         end
-        local success = fluidInterface.setFluidInterfaceConfiguration(1, db.address, index)
+        local success = fluidInterface.setFluidInterfaceConfiguration(5, db.address, index)
         if not success then
             print("set fluid interface failed, label:" .. fluidLabel .. "db index:" .. index)
             error("set fluid interface failed, label:" .. fluidLabel .. "db index:" .. index)

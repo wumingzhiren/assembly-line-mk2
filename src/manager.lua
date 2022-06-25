@@ -12,20 +12,22 @@ function _M.getFluidDatabase()
     return db
 end
 
-function _M.getFluidIndexByIdentity(identity , fluidName)
-    local cache = dbCache[identity]
+function _M.getFluidIndexByRecipeFluidy(recipeFluid)
+    local cache = dbCache[recipeFluid[1]]
     if cache then
         return cache
     end
 
     for i = 1, 81 do
         local data = db.get(i)
-        if data and item_utils.itemIdentity(data) == identity then
-            --local hash = db.computeHash(i)
-            dbCache[identity] = i
+        if data and item_utils.itemIdentity(data) == recipeFluid[1] then
+            dbCache[recipeFluid[1]] = i
             return i
-        elseif data and data.fluid_name == fluidName then
-            dbCache[identity] = i
+        elseif data and data.fluid_name == recipeFluid.cname then
+            dbCache[recipeFluid[1]] = i
+            return i
+        elseif data and item_utils.itemIdentity(data) == recipeFluid.containerItem then
+            dbCache[recipeFluid[1]] = i
             return i
         end
     end
